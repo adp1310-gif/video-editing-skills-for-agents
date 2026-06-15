@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FlytBase Reel</title>
+  <link rel="stylesheet" href="flytbase-reel.css" />
+  <!-- GSAP: a `hyperframes init` project provides this; CDN keeps the starter self-contained. -->
+  <script src="https://unpkg.com/gsap@3.13.0/dist/gsap.min.js"></script>
+</head>
+<body style="margin:0">
+  <!-- Standalone root: explicitly sized; do NOT wrap in a template tag. -->
+  <div id="reel" class="stage"
+       data-composition-id="flytbase-reel"
+       data-start="0"
+       data-width="1080" data-height="1920" data-duration="18.5">
+
+    <!-- ───────────── Track 1 — persistent background ───────────── -->
+    <div id="bg" class="scene clip" data-start="0" data-duration="18.5" data-track-index="1">
+      <div class="bg-grid" data-layout-allow-overflow></div>
+      <div class="thermal-glow"></div>
+      <div class="vignette"></div>
+    </div>
+
+    <!-- ───────────── Track 2 — sequential scenes ───────────── -->
+
+    <!-- S0 · Logo sting (0–2.5) -->
+    <section id="sting" class="scene clip" data-start="0" data-duration="2.5" data-track-index="2">
+      <div class="sting-wrap">
+        <span class="sting-dot"></span>
+        <div class="wordmark-text">FlytBase</div>
+        <div class="sting-meta">The Autonomy Layer</div>
+      </div>
+    </section>
+
+    <!-- S1 · Title card (2.5–6.5) -->
+    <section id="title" class="scene clip" data-start="2.5" data-duration="4" data-track-index="2">
+      <div class="safe">
+        <div class="eyebrow"><span class="sq"></span><span class="eyebrow-label">Every mission type</span></div>
+        <span class="rule"></span>
+        <h1 class="headline">
+          <span class="w">Autonomous</span> <span class="w">drone</span> <span class="w">ops,</span>
+          <span class="w"><em>confirmed</em></span> <span class="w">from</span> <span class="w">altitude.</span>
+        </h1>
+        <p class="kicker">One platform to plan, fly, and verify every mission — no pilot on site.</p>
+      </div>
+    </section>
+
+    <!-- S2 · Stat pop (6.5–10.5) -->
+    <section id="stat" class="scene clip" data-start="6.5" data-duration="4" data-track-index="2">
+      <div class="safe">
+        <div class="eyebrow"><span class="sq"></span><span class="eyebrow-label">Fleet telemetry</span></div>
+        <div class="stat-row"><span class="stat-num">0</span><span class="stat-unit">+</span></div>
+        <div class="stat-label">Autonomous flights / year</div>
+      </div>
+    </section>
+
+    <!-- S3 · Feature row-list (10.5–14.5) -->
+    <section id="list" class="scene clip" data-start="10.5" data-duration="4" data-track-index="2">
+      <div class="safe">
+        <div class="eyebrow"><span class="sq"></span><span class="eyebrow-label">What ships</span></div>
+        <h2 class="headline" style="font-size:72px">Built for <em>operators</em>.</h2>
+        <ul class="rowlist">
+          <li class="row"><span class="row-icon">01</span><div><div class="row-text">Dock-to-dashboard autonomy</div><div class="row-sub">Scheduled, repeatable, hands-off</div></div></li>
+          <li class="row"><span class="row-icon">02</span><div><div class="row-text">Live thermal + visual feeds</div><div class="row-sub">Signed telemetry on every frame</div></div></li>
+          <li class="row"><span class="row-icon">03</span><div><div class="row-text">BVLOS-ready compliance</div><div class="row-sub">Audit trail baked in</div></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- S4 · CTA end card (14.5–18.5) -->
+    <section id="cta" class="scene clip" data-start="14.5" data-duration="4" data-track-index="2">
+      <div class="safe">
+        <span class="rule"></span>
+        <div class="wordmark"><span class="brand-dot"></span>FlytBase</div>
+        <div class="cta-url">flytbase.com</div>
+        <div class="btn">Book a demo</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Motion system -->
+  <script src="flytframes.js"></script>
+  <script>
+    // Single paused timeline, built synchronously. Player owns playback.
+    const tl = gsap.timeline({ paused: true });
+
+    // S0 · sting (0)
+    FB.dot(tl, '#sting .sting-dot', 0.2);
+    FB.reveal(tl, '#sting .wordmark-text', 0.7, { dur: FB.D.hero, ease: FB.E.hero });
+    FB.reveal(tl, '#sting .sting-meta', 1.25, { dur: FB.D.std });
+
+    // S1 · title (2.5)
+    FB.eyebrow(tl, '#title .eyebrow', 2.6);
+    FB.rule(tl, '#title .rule', 2.75);
+    FB.words(tl, '#title .headline', 2.95);
+    FB.reveal(tl, '#title .kicker', 3.9, { dur: FB.D.reveal });
+
+    // S2 · stat (6.5)
+    FB.eyebrow(tl, '#stat .eyebrow', 6.6);
+    FB.countUp(tl, '#stat .stat-num', 3400, 6.9, { group: true, dur: 1.2 });
+    FB.reveal(tl, '#stat .stat-unit', 6.9, { dur: FB.D.std });
+    FB.reveal(tl, '#stat .stat-label', 8.0, { dur: FB.D.reveal });
+
+    // S3 · list (10.5)
+    FB.eyebrow(tl, '#list .eyebrow', 10.6);
+    FB.reveal(tl, '#list .headline', 10.8, { dur: FB.D.reveal });
+    FB.rule && FB.stagger(tl, '#list .row', 11.25, { each: 0.1 });
+
+    // S4 · cta (14.5)
+    FB.rule(tl, '#cta .rule', 14.7);
+    FB.reveal(tl, '#cta .wordmark', 14.85, { dur: FB.D.hero, ease: FB.E.hero });
+    FB.reveal(tl, '#cta .cta-url', 15.45, { dur: FB.D.std });
+    FB.reveal(tl, '#cta .btn', 15.85, { dur: FB.D.std, y: 12 });
+
+    // Background life
+    FB.drift(tl, '#bg .bg-grid', 0, 18.5, { to: 1.06 });
+
+    window.__timelines = window.__timelines || {};
+    window.__timelines['flytbase-reel'] = tl;
+  </script>
+</body>
+</html>
