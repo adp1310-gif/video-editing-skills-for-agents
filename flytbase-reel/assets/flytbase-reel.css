@@ -500,3 +500,42 @@
 @media (prefers-reduced-motion: reduce) {
   .headline .w, .rule, .row, .kicker, .body { opacity:1 !important; transform:none !important; }
 }
+
+/* ============================================================================
+   16:9 LANDSCAPE LAUNCH MODE — add class "wide" to .stage and set the root
+   data-width="1920" data-height="1080". For product/feature launch videos that
+   show real UI screenshots with movement (Ken-Burns / slide / panel reveals).
+   Pair with the FB.pushIn / slideIn / panelIn / fadeIn motion helpers.
+   ========================================================================== */
+.stage.wide { width:1920px; height:1080px; }
+
+/* Full-bleed screenshot layer (Ken-Burns target = the <img>) */
+.shot { position:absolute; inset:0; overflow:hidden; z-index:0; }
+.shot img { width:100%; height:100%; object-fit:cover; will-change:transform; }
+.scrim-l { position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(90deg, rgba(12,12,12,.95) 0%, rgba(12,12,12,.74) 34%, rgba(12,12,12,.12) 66%, transparent 100%); }
+.scrim-b { position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(0deg, rgba(12,12,12,.92) 0%, transparent 42%); }
+
+/* Right-side framed screenshot panel (orange edge marker) */
+.panel { position:absolute; right:90px; top:150px; bottom:150px; width:900px; z-index:1; overflow:hidden; border:1px dotted var(--db); background:var(--ds); }
+.panel img { width:100%; height:100%; object-fit:cover; will-change:transform; }
+.panel::after { content:""; position:absolute; left:0; top:0; width:4px; height:100%; background:var(--o400); }
+
+/* Text containers */
+.col-l  { position:absolute; left:96px; top:0; bottom:0; width:720px; z-index:2; display:flex; flex-direction:column; justify-content:center; gap:26px; }
+.center { position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; padding:0 140px; gap:30px; }
+.lede   { font-family:var(--serif); font-size:48px; line-height:1.15; color:var(--dh); letter-spacing:-.01em; max-width:700px; }
+
+/* Persistent top-left brand mark */
+.mark { position:absolute; top:60px; left:96px; z-index:4; display:flex; align-items:center; gap:14px;
+  font-family:var(--mono); font-size:24px; letter-spacing:.12em; text-transform:uppercase; color:var(--dbd); }
+.mark .brand-dot { width:16px; height:16px; border-radius:50%; background:var(--o400); display:inline-block; }
+
+/* Landscape type scale (scoped to .wide so portrait reels are untouched) */
+.stage.wide .display  { font-size:200px; line-height:.96; }
+.stage.wide .headline { font-size:84px; line-height:1.05; }
+.stage.wide .kicker   { font-size:34px; max-width:680px; }
+.stage.wide .eyebrow  { font-size:25px; }
+.stage.wide .meta     { font-size:24px; }
+.stage.wide .wordmark { font-size:88px; }

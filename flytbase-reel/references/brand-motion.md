@@ -51,6 +51,13 @@ Every helper takes `(tl, selector, at, opts?)` and adds tweens to the one paused
 | `FB.dot(tl, sel, at, o)` | Brand dot pops with one calm pulse | `dur=1.2` |
 | `FB.exit(tl, sel, at, o)` | Fade + small drop (in-curve, for leaving) | `y=16, dur=.4, ease=in` |
 | `FB.drift(tl, sel, at, dur, o)` | Very slow background scale for life | `to=1.06` |
+| `FB.pushIn(tl, sel, at, dur, o)` | **16:9 launch** — Ken-Burns scale on a screenshot (`dur`=scene length; `from>to`=pull-back) | `from=1.0, to=1.12` |
+| `FB.slideIn(tl, sel, at, o)` | **16:9 launch** — enter from a horizontal offset | `x=-40, dur=.9, ease=hero` |
+| `FB.panelIn(tl, sel, at, o)` | **16:9 launch** — framed screenshot panel flies in from the right | `x=120, dur=.7, ease=hero` |
+| `FB.fadeIn(tl, sel, at, o)` | **16:9 launch** — plain opacity fade for full-bleed media | `dur=.6, ease=out` |
+
+### 16:9 landscape layout classes (in `flytbase-reel.css`, scoped to `.stage.wide`)
+`.shot` + `.scrim-l`/`.scrim-b` (full-bleed screenshot + legibility gradient) · `.panel` (right framed screenshot, orange edge) · `.col-l` (left text column) · `.center` (centered title/CTA) · `.lede` (Lora sub-headline) · `.mark` (persistent brand mark). Set root `class="stage wide"` + `data-width="1920" data-height="1080"`. Screenshots go in `.shot img` or `.panel img` (both `object-fit:cover`, clipped) and are animated with `FB.pushIn`. For narration, add two root `<audio>` on separate tracks (VO `data-volume="1"`, music `~0.3`).
 
 ### Timing recipe (per scene)
 1. Scene base time `T` = the scene's `data-start`.

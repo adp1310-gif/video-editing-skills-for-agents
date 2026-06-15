@@ -98,5 +98,36 @@ window.FB = (function () {
     return tl;
   }
 
-  return { D, E, EACH, RISE, reveal, stagger, eyebrow, rule, words, countUp, dot, exit, drift };
+  /* ── 16:9 launch helpers (screenshots that move) ─────────────────────── */
+
+  /* pushIn — slow Ken-Burns scale on a screenshot inside an overflow:hidden frame.
+     `dur` should equal the scene's data-duration. from>to = pull-back. */
+  function pushIn(tl, sel, at, dur, o = {}) {
+    const { from = 1.0, to = 1.12 } = o;
+    tl.fromTo(sel, { scale: from }, { scale: to, duration: dur, ease: 'none' }, at);
+    return tl;
+  }
+
+  /* slideIn — enter from a horizontal offset (default from the left). */
+  function slideIn(tl, sel, at, o = {}) {
+    const { x = -40, dur = D.reveal, ease = E.hero } = o;
+    tl.fromTo(sel, { opacity: 0, x }, { opacity: 1, x: 0, duration: dur, ease }, at);
+    return tl;
+  }
+
+  /* panelIn — a framed screenshot panel enters from the right and settles. */
+  function panelIn(tl, sel, at, o = {}) {
+    const { x = 120, dur = 0.7, ease = E.hero } = o;
+    tl.fromTo(sel, { opacity: 0, x, scale: 1.04 }, { opacity: 1, x: 0, scale: 1, duration: dur, ease }, at);
+    return tl;
+  }
+
+  /* fadeIn — plain opacity fade, for full-bleed media entrances. */
+  function fadeIn(tl, sel, at, o = {}) {
+    const { dur = 0.6, ease = E.out } = o;
+    tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: dur, ease }, at);
+    return tl;
+  }
+
+  return { D, E, EACH, RISE, reveal, stagger, eyebrow, rule, words, countUp, dot, exit, drift, pushIn, slideIn, panelIn, fadeIn };
 })();

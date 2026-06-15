@@ -136,6 +136,46 @@ FB.reveal(tl, '#cta .btn', 15.85, { dur: FB.D.std, y: 12 });
 4. A light variant: add `class="light"` to a `.scene` for a deliberate inverted card (≤1 per reel).
 5. `lint` → `validate` → `snapshot --at <midpoints>` → `render --quality high`.
 
+---
+
+## 16:9 launch scenes (landscape, real screenshots)
+
+Root: `<div class="stage wide" data-width="1920" data-height="1080" ...>`. Persistent `<div class="mark"><span class="brand-dot"></span>FlytBase · New Release</div>`. See SKILL.md "16:9 launch mode".
+
+**Full-bleed screenshot + text (with Ken-Burns):**
+```html
+<section id="sX" class="scene clip" data-start="T" data-duration="D" data-track-index="2">
+  <div class="shot"><img id="sXimg" src="media/hero.jpg" alt="..."></div>
+  <div class="scrim-l"></div><div class="scrim-b"></div>
+  <div class="col-l">
+    <div class="eyebrow"><span class="sq"></span><span class="eyebrow-label">One command center</span></div>
+    <h2 class="headline">Arrange it your <em>way</em></h2>
+    <p class="kicker">Resize, float, swap — saved across every session.</p>
+  </div>
+</section>
+```
+```js
+FB.fadeIn(tl, '#sXimg', T); FB.pushIn(tl, '#sXimg', T, D, { from:1.0, to:1.12 });
+FB.eyebrow(tl, '#sX .eyebrow', T+0.2); FB.slideIn(tl, '#sX .headline', T+0.4); FB.reveal(tl, '#sX .kicker', T+1.1, { dur:FB.D.std });
+```
+
+**Text-left + framed screenshot panel:**
+```html
+<section id="sY" class="scene clip" data-start="T" data-duration="D" data-track-index="3">
+  <div class="col-l">
+    <div class="eyebrow"><span class="sq"></span><span class="eyebrow-label">Device picker</span></div>
+    <h2 class="headline" style="font-size:78px">Any dock, any <em>drone</em></h2>
+    <p class="kicker">Find and select a pair in seconds.</p>
+  </div>
+  <div class="panel"><img id="sYimg" src="media/device.jpg" alt="..."></div>
+</section>
+```
+```js
+FB.eyebrow(tl, '#sY .eyebrow', T+0.15); FB.slideIn(tl, '#sY .headline', T+0.3); FB.reveal(tl, '#sY .kicker', T+0.9, { dur:FB.D.std });
+FB.panelIn(tl, '#sY .panel', T+0.25); FB.pushIn(tl, '#sYimg', T+0.25, D, { from:1.05, to:1.13 });
+```
+Alternate full-bleed / panel scenes and alternate `data-track-index` 2/3 so adjacent scenes never collide on a track boundary. Long headlines: drop `font-size` inline. Narration: align each `T` to the VO's transcribed sentence start.
+
 ### Optional polish (`/hyperframes-media`)
 - **BGM:** `npx hyperframes bgm` for a low, industrial bed; add as a root-level `<audio>` (direct child of root, per core rules).
 - Reels usually run **silent-first** — design to read with sound off. Keep it text-driven.

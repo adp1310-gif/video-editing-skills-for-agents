@@ -47,6 +47,17 @@ Brand law it encodes (from FlytBase-26 DESIGN-SYSTEM): one accent (Signal Orange
 
 In `references/scene-library.md`, copy-paste ready: **logo sting**, **title card**, **stat pop** (count-up), **feature row-list**, **quote/claim**, **CTA end card**. Each ships its HTML block + the exact `FB.*` timeline calls. Mix them; keep scenes on Track 2 contiguous over a persistent Track 1 background.
 
+## 16:9 launch mode (product / feature videos)
+
+The same engine builds **landscape launch videos** that show real product UI with movement. Switch on by adding `class="stage wide"` to the root and setting `data-width="1920" data-height="1080"`. Then:
+
+- **Layout classes** (in `flytbase-reel.css`): `.shot` + `.scrim-l`/`.scrim-b` (full-bleed screenshot with legibility gradient), `.panel` (right-side framed screenshot with orange edge), `.col-l` (left text column), `.center` (centered title/CTA), `.lede` (Lora sub-headline), `.mark` (persistent top-left brand mark). Landscape type sizes are scoped to `.stage.wide`.
+- **Motion — screenshots that move:** `FB.pushIn(tl, sel, at, dur, {from,to})` (slow Ken-Burns; `dur` = scene length; `from>to` = pull-back), `FB.slideIn(tl, sel, at, {x})`, `FB.panelIn(tl, sel, at)` (framed panel flies in from right), `FB.fadeIn(tl, sel, at)`. Compose with the standard helpers (eyebrow/words/rule/reveal/stagger).
+- **Real screenshots:** capture them with `npx hyperframes capture <feature-url>` → use the downloaded `cap/assets/image-*.jpg`. Frame full-bleed (`.shot`, object-fit cover) or in a `.panel`.
+- **Narration (optional):** `npx hyperframes tts script.txt -o media/vo.wav -v am_michael`, then `transcribe` the VO for sentence timings and place each scene at the matching time. Add two root-level `<audio>` elements on **separate tracks** — VO at `data-volume="1"`, music ducked to `~0.3`.
+- **Music:** no local generator ships; synthesize a bed with ffmpeg or drop in a licensed track as a root `<audio>`.
+- **Style dial:** *elevated* (pushIn + slideIn + panelIn + kinetic words — best for social/feed attention) vs *restrained* (soft fades + slow drift only — premium/site hero). Pick per audience.
+
 ## Hard rules (never break)
 
 1. One brand accent (orange). 2. Sharp corners; dotted hairlines. 3. Lora headline = one italic word max; Geist Mono for eyebrows/numbers/labels. 4. Operator voice — specific numbers, no hype, **no emoji**. 5. Motion via FlytFrames helpers only — no ad-hoc durations/easings. 6. Single paused timeline registered at `window.__timelines["flytbase-reel"]`; build it synchronously. 7. Deterministic only — no `Date.now()` / `Math.random()` / network (count-ups use `FB.countUp`). 8. Keep the `.safe` padding so type never collides with platform UI. 9. Run lint + validate + snapshot before every render.
